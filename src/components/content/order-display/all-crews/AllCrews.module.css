@@ -1,0 +1,19 @@
+.all_crews {
+    border: 2px solid black;
+    padding: 2vh 0 0 0;
+    background-color: #08253B;
+    color: white;
+    max-height: 500px;
+    max-width: 600px;
+}
+
+.head {
+    font-size: 2vh;
+    padding-bottom: 2vh;
+    width: 450px;
+}
+
+.crew_list {
+    overflow: auto;
+    max-height: 450px;
+}

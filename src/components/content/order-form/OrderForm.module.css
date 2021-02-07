@@ -1,0 +1,15 @@
+.input {
+    margin: 3vh 0;
+}
+
+.input input {
+    width: 80%;
+}
+
+.valid input{
+    border-color: black;
+}
+
+.not_valid input {
+    border-color: red;
+}

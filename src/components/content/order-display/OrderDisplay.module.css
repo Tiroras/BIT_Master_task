@@ -1,0 +1,7 @@
+.order_display {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 4vh auto;
+    width: 80%;
+}

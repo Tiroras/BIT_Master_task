@@ -1,0 +1,14 @@
+.suitable_crews {
+    margin: 2vh 0;
+    padding: 2vh 6vh;
+    background-color: #08253B;
+    color: white;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.head {
+    font-size: 3vh;
+    margin: auto 5vw;
+}

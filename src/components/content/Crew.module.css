@@ -1,0 +1,55 @@
+.crew {
+    display: flex;
+    border: 2px solid black;
+    width: 350px;
+    height: 100px;
+    padding: 2vh;
+    margin: 2vh 2vh;
+    color: black;
+    transition: 0.2s;
+}
+
+.crew:hover {
+    transform: scale(1.05);
+    transition: 0.2s;
+}
+
+.img {
+    width: 100px;
+    height: 100px;
+}
+
+.img img{
+    width: 100px;
+    height: 100px;
+}
+
+.crew_information {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.car_information {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: left;
+    padding-left: 2vh;
+}
+
+.distance {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.crew_selected {
+    background-color: #D2D2D2;
+    border-radius: 0;
+}
+
+.crew_not_selected {
+    background-color: white;
+    border-radius: 15px;
+}

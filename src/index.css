@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Rubik', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+header {
+  background-color: #08253B;
+  color: white;
+  text-align: left;
+  font-size: 3vh;
+  padding: 3vh 4vw;
+}
+
+main {
+  margin: 4vh 0;
+}
+
+input {
+  font-family: 'Rubik', sans-serif;
+  padding: 1vh;
+  border-radius: 5px;
+}
+
+button {
+  border: 0;
+  background-color: #08253B;
+  font-family: 'Rubik', sans-serif;
+  color: white;
+}
