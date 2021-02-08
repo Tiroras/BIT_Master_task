@@ -1,13 +1,13 @@
 import {YMapsApi} from "react-yandex-maps";
-import {setOrderAddressAC, setOrderLatAC, setOrderLonAC, setValidAC} from "./form-reducer";
-import {setCrewFound, setCrewsAC, setSuitableCrewAC} from "./crew-reducer";
+import {FormActionTypes, setOrderAddressAC, setOrderLatAC, setOrderLonAC, setValidAC} from "./form-reducer";
+import {CrewActionsType, setCrewFound, setCrewsAC, setSuitableCrewAC} from "./crew-reducer";
 import {API} from "../api/api";
 import {Dispatch} from "react";
 import {ICrew} from "../types/ProjTypes.types";
 
 
 type TState = typeof initialState
-type ActionTypes = ReturnType<typeof setPointCoordLat> | ReturnType<typeof setPointCoordLon> | ReturnType<typeof setAddressFound>;
+export type PointActionTypes = ReturnType<typeof setPointCoordLat> | ReturnType<typeof setPointCoordLon> | ReturnType<typeof setAddressFound>;
 
 const initialState = {
   point: {
@@ -19,7 +19,7 @@ const initialState = {
   }
 }
 
-const pointReducer = (state: TState = initialState, action: ActionTypes) => {
+const pointReducer = (state: TState = initialState, action: PointActionTypes) => {
   switch (action.type) {
     case "SET-ADDRESS-FOUND": {
       return {...state, point: {...state.point, addressFound: action.value}}
@@ -41,11 +41,13 @@ export const setPointCoordLon = (value: number) => ({type: "SET-POINT-COORDS-LON
 export const setAddressFound = (value: boolean) => ({type: "SET-ADDRESS-FOUND", value} as const);
 
 
-export const setPointOnMap = (coords: Array<number>, ymaps: YMapsApi) => (dispatch: Dispatch<any>) => {
+export const setPointOnMap = (coords: Array<number>, ymaps: YMapsApi) =>
+  (dispatch: Dispatch<PointActionTypes | FormActionTypes | CrewActionsType>) => {
+
   dispatch(setPointCoordLat(coords[0]));
   dispatch(setPointCoordLon(coords[1]));
 
-  ymaps.geocode(coords).then((response: any)=> {
+  ymaps.geocode(coords).then((response: YMapsApi)=> {
     const geoObjt = response.geoObjects.get(0);
     dispatch(setOrderAddressAC(geoObjt.getAddressLine()));
 
@@ -85,12 +87,15 @@ export const setPointOnMap = (coords: Array<number>, ymaps: YMapsApi) => (dispat
   })
 }
 
-export const setPointByInput = (ymaps: YMapsApi, address: string) => (dispatch: any) => {
+export const setPointByInput = (ymaps: YMapsApi, address: string) =>
+  (dispatch: Dispatch<PointActionTypes | FormActionTypes | CrewActionsType>) => {
+
   let coords: Array<number> = [];
+  const time = new Date();
 
   dispatch(setOrderAddressAC(address));
 
-  ymaps.geocode(address).then((response: any) => {
+  ymaps.geocode(address).then((response: YMapsApi) => {
     const geoObj = response.geoObjects.get(0);
     coords = geoObj.geometry.getCoordinates();
     dispatch(setPointCoordLat(coords[0]));
@@ -104,9 +109,9 @@ export const setPointByInput = (ymaps: YMapsApi, address: string) => (dispatch: 
       lat: coords[0],
       lon: coords[0]
     },
-    time: ""
+    time: `${time.getFullYear()}.${time.getMonth()}.${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`
   }).then(res => {
-    ymaps.geocode(coords).then((response: any)=> {
+    ymaps.geocode(coords).then((response: YMapsApi)=> {
       const geoObjt = response.geoObjects.get(0);
 
       if(geoObjt.getPremiseNumber()) {

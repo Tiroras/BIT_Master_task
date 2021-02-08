@@ -1,7 +1,7 @@
 
 
 type IState = typeof initialState;
-type ActionTypes = ReturnType<typeof setOrderAddressAC> |
+export type FormActionTypes = ReturnType<typeof setOrderAddressAC> |
   ReturnType<typeof setOrderLonAC> |
   ReturnType<typeof setOrderLatAC> |
   ReturnType<typeof setYMapsAC> |
@@ -18,11 +18,11 @@ const initialState = {
     },
     crew_id: 0
   },
-  ymaps: {},//null as Nullable<YMapsApi>,
+  ymaps: {},
   isValid: true
 }
 
-const formReducer = (state: IState = initialState, action: ActionTypes) => {
+const formReducer = (state: IState = initialState, action: FormActionTypes) => {
   switch (action.type) {
     case "SET-ORDER-ADDRESS": {
       return {...state, order: {...state.order, addresses: {...state.order.addresses, address: action.address}}}

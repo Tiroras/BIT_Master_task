@@ -7,12 +7,12 @@ type TState = {
   suitableCrewFound: boolean
 }
 
-type ActionsType = ReturnType<typeof setSuitableCrewAC> |
+export type CrewActionsType = ReturnType<typeof setSuitableCrewAC> |
   ReturnType<typeof setDistanceAC> |
   ReturnType<typeof setSCTimeAC> |
   ReturnType<typeof sortCrewsAC> |
   ReturnType<typeof setCrewFound> |
-  ReturnType<typeof setCrewsAC>
+  ReturnType<typeof setCrewsAC>;
 
 const initialState: TState = {
   crews: [],
@@ -24,7 +24,7 @@ const initialState: TState = {
   suitableCrewFound: false
 }
 
-const crewReducer = (state: TState = initialState, action: ActionsType) => {
+const crewReducer = (state: TState = initialState, action: CrewActionsType) => {
   switch (action.type) {
     case "SET-CREWS": {
       return {...state, crews: action.crews}
