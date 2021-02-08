@@ -2,9 +2,8 @@ import {createServer} from "miragejs";
 import {TCrewReq, TOrder} from "../types/ProjTypes.types";
 
 
-export function makeServer({ environment = "test" } = {}) {
+export function makeServer() {
   const server = createServer({
-    environment,
 
     routes() {
       this.namespace = "api"

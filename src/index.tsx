@@ -8,9 +8,7 @@ import store from "./redux/store";
 import {makeServer} from "./api/api";
 
 
-if (process.env.NODE_ENV === "production") {
-  makeServer({ environment: "production" })
-}
+makeServer()
 
 ReactDOM.render(
   <React.StrictMode>
