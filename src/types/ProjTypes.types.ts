@@ -12,7 +12,24 @@ export type ICrew = {
 }
 
 export type TSuitableCrew = {
-  code: 0 | number
+  code: number;
   crews: Array<ICrew>,
   time: string;
+}
+
+export type TAddresses = {
+  address: string;
+  lat: number;
+  lon: number;
+}
+
+export type TCrewReq = {
+  time: string;
+  addresses: TAddresses;
+}
+
+export type TOrder = {
+  time: string;
+  descr: string;
+  orderID: number;
 }

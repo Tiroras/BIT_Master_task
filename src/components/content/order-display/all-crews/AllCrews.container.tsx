@@ -1,7 +1,8 @@
 import React from 'react';
 import AllCrews from "./AllCrews";
 import {connect} from "react-redux";
-import {ICrew} from "../../../../types/ICrews.type";
+import {ReducerType} from "../../../../redux/store";
+import {ICrew} from "../../../../types/ProjTypes.types";
 
 
 interface IProps {
@@ -18,7 +19,7 @@ const AllCrewsContainer = (props: IProps) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ReducerType) => ({
   data: state.crewsData.crews,
   suitableCrewFound: state.crewsData.suitableCrewFound
 });

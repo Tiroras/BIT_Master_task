@@ -1,4 +1,4 @@
-import {ICrew, TSuitableCrew} from "../types/ICrews.type";
+import {ICrew, TSuitableCrew} from "../types/ProjTypes.types";
 
 
 type TState = {

@@ -2,6 +2,7 @@ import React from 'react';
 import SuitableCrewItem from "./SuitableCrewItem";
 import {connect} from "react-redux";
 import {setOrderCrewIDAC} from "../../../../redux/form-reducer";
+import {ReducerType} from "../../../../redux/store";
 
 
 interface IProps {
@@ -28,7 +29,7 @@ const SuitableCrewItemContainer = (props: IProps) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ReducerType) => ({
   orderCrewID: state.formData.order.crew_id
 })
 

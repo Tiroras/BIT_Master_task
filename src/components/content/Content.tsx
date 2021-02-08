@@ -2,7 +2,7 @@ import React from 'react';
 import OrderFormContainer from "./order-form/OrderForm.container";
 import SuitableCrew from "./suitable-crew/SuitableCrew";
 import OrderDisplay from "./order-display/OrderDisplay";
-import Order from "./button/Order";
+import OrderContainer from "./button/Order.container";
 
 
 interface IProps {
@@ -16,7 +16,7 @@ const Content = (props: IProps) => {
         <OrderFormContainer />
         <SuitableCrew />
         <OrderDisplay />
-        <Order />
+        <OrderContainer />
       </form>
     </main>
   )

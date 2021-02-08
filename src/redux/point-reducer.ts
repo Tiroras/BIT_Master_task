@@ -1,9 +1,9 @@
 import {YMapsApi} from "react-yandex-maps";
-import {ICrew} from "../types/ICrews.type";
 import {setOrderAddressAC, setOrderLatAC, setOrderLonAC, setValidAC} from "./form-reducer";
 import {setCrewFound, setCrewsAC, setSuitableCrewAC} from "./crew-reducer";
-import {crewsAPI} from "../api/api";
+import {API} from "../api/api";
 import {Dispatch} from "react";
+import {ICrew} from "../types/ProjTypes.types";
 
 
 type TState = typeof initialState
@@ -13,7 +13,7 @@ const initialState = {
   point: {
     coordinates: {
       lat: 0,
-      lot: 0
+      lon: 0
     },
     addressFound: false
   }
@@ -45,31 +45,43 @@ export const setPointOnMap = (coords: Array<number>, ymaps: YMapsApi) => (dispat
   dispatch(setPointCoordLat(coords[0]));
   dispatch(setPointCoordLon(coords[1]));
 
-  crewsAPI.getCrews().then(res => {
-    ymaps.geocode(coords).then((response: any)=> {
+  ymaps.geocode(coords).then((response: any)=> {
+    const geoObjt = response.geoObjects.get(0);
+    dispatch(setOrderAddressAC(geoObjt.getAddressLine()));
 
-      const geoObjt = response.geoObjects.get(0);
-      if(geoObjt.getPremiseNumber()) {
-        dispatch(setAddressFound(true));
-        dispatch(setOrderLatAC(coords[0]));
-        dispatch(setOrderLonAC(coords[1]));
-        dispatch(setValidAC(true));
+    if(geoObjt.getPremiseNumber()) {
+      dispatch(setAddressFound(true));
+      dispatch(setOrderLatAC(coords[0]));
+      dispatch(setOrderLonAC(coords[1]));
+      dispatch(setValidAC(true));
+      return geoObjt.getAddressLine()
+    }
 
-        res.map((crew: ICrew) => {
-          return crew.distance = Math.round(ymaps.coordSystem.geo.getDistance([coords[0], coords[1]], [crew.lat, crew.lon]));
-        });
-        res.sort((a: ICrew, b: ICrew) => a.distance > b.distance ? 1 : -1);
-        dispatch(setCrewsAC(res));
-        dispatch(setSuitableCrewAC([res[0]]));
-        dispatch(setCrewFound(true));
-      }
+    else {
+      dispatch(setAddressFound(false));
+      dispatch(setValidAC(false));
+    }
+  }).then((address: string) => {
+    API.getCrews({
+      addresses: {
+        address: address,
+        lat: coords[0],
+        lon: coords[1]
+      },
+      time: ""
+    }).then(res => {
+      res.data.map((crew: ICrew) => {
+        return crew.distance = Math.round(ymaps.coordSystem.geo.getDistance(
+          [coords[0], coords[1]],
+          [crew.lat, crew.lon]));
+      });
 
-      else {
-        dispatch(setAddressFound(false));
-        dispatch(setValidAC(false));
-      }
-      dispatch(setOrderAddressAC(geoObjt.getAddressLine()));
-    });
+      res.data.sort((a: ICrew, b: ICrew) => a.distance > b.distance ? 1 : -1);
+
+      dispatch(setCrewsAC(res.data));
+      dispatch(setSuitableCrewAC([res.data[0]]));
+      dispatch(setCrewFound(true));
+    })
   })
 }
 
@@ -86,7 +98,14 @@ export const setPointByInput = (ymaps: YMapsApi, address: string) => (dispatch: 
   })
 
 
-  crewsAPI.getCrews().then(res => {
+  API.getCrews({
+    addresses: {
+      address,
+      lat: coords[0],
+      lon: coords[0]
+    },
+    time: ""
+  }).then(res => {
     ymaps.geocode(coords).then((response: any)=> {
       const geoObjt = response.geoObjects.get(0);
 
@@ -94,52 +113,16 @@ export const setPointByInput = (ymaps: YMapsApi, address: string) => (dispatch: 
         dispatch(setAddressFound(true));
         dispatch(setValidAC(true));
 
-        res.map((crew: ICrew) => {
+        res.data.map((crew: ICrew) => {
           return crew.distance = Math.round(ymaps.coordSystem.geo.getDistance([coords[0], coords[1]], [crew.lat, crew.lon]));
         });
-        res.sort((a: ICrew, b: ICrew) => a.distance > b.distance ? 1 : -1);
-        dispatch(setCrewsAC(res));
-        dispatch(setSuitableCrewAC([res[0]]));
+        res.data.sort((a: ICrew, b: ICrew) => a.distance > b.distance ? 1 : -1);
+        dispatch(setCrewsAC(res.data));
+        dispatch(setSuitableCrewAC([res.data[0]]));
         dispatch(setCrewFound(true));
       }
 
       else {
-        dispatch(setAddressFound(false));
-        dispatch(setValidAC(false));
-      }
-    });
-  });
-}
-
-export const setPointBySelect = (ymaps: YMapsApi, address: string) => (dispatch: Dispatch<any>) => {
-  let coords: Array<number> = [];
-
-  dispatch(setOrderAddressAC(address))
-
-  ymaps.geocode(address).then((response: any) => {
-    const geoObj = response.geoObjects.get(0);
-    coords = geoObj.geometry.getCoordinates();
-    dispatch(setPointCoordLat(coords[0]));
-    dispatch(setPointCoordLon(coords[1]));
-  })
-
-
-  crewsAPI.getCrews().then(res => {
-    ymaps.geocode(coords).then((response: any) => {
-      const geoObjt = response.geoObjects.get(0);
-
-      if (geoObjt.getPremiseNumber()) {
-        dispatch(setAddressFound(true));
-        dispatch(setValidAC(true));
-
-        res.map((crew: ICrew) => {
-          return crew.distance = Math.round(ymaps.coordSystem.geo.getDistance([coords[0], coords[1]], [crew.lat, crew.lon]));
-        });
-        res.sort((a: ICrew, b: ICrew) => a.distance > b.distance ? 1 : -1);
-        dispatch(setCrewsAC(res));
-        dispatch(setSuitableCrewAC([res[0]]));
-        dispatch(setCrewFound(true));
-      } else {
         dispatch(setAddressFound(false));
         dispatch(setValidAC(false));
       }

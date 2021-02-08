@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from "./AllCrews.module.css";
-import {ICrew} from "../../../../types/ICrews.type";
 import CrewContainer from "./Crew.container";
+import {ICrew} from "../../../../types/ProjTypes.types";
 
 
 interface IProps {

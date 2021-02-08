@@ -1,10 +1,11 @@
 import React from 'react';
 import DisplayMap from "./DisplayMap";
 import {connect} from "react-redux";
-import {ICrew, TSuitableCrew} from "../../../../types/ICrews.type";
 import {setOrderAddressAC, setYMapsAC} from "../../../../redux/form-reducer";
 import {YMapsApi} from "react-yandex-maps";
-import {setPointByInput, setPointBySelect, setPointOnMap} from "../../../../redux/point-reducer";
+import {setPointByInput, setPointOnMap} from "../../../../redux/point-reducer";
+import {ReducerType} from "../../../../redux/store";
+import {ICrew, TSuitableCrew} from "../../../../types/ProjTypes.types";
 
 
 interface ICoords {
@@ -28,7 +29,6 @@ interface IProps {
   setYMapsAC: (ymaps: YMapsApi) => void;
   setOrderAddressAC: (value: string) => void;
   setPointByInput: (ymaps: YMapsApi, address: string) => void;
-  setPointBySelect: (ymaps: YMapsApi, address: string) => void;
 }
 
 const DisplayMapContainer = (props: IProps) => {
@@ -36,13 +36,12 @@ const DisplayMapContainer = (props: IProps) => {
     props.setYMapsAC(ymaps);
     const suggestView = new ymaps.SuggestView('from');
     suggestView.events.add("select", (e: any) => {
-     props.setPointBySelect(ymaps, e.get('item').value)
+     props.setPointByInput(ymaps, e.get('item').value)
     })
   }
 
   const handleClick = (data: YMapsApi) => {
     const coords = data.get('coords');
-    console.log(props.addressFound)
     props.setPointOnMap(coords, props.ymaps);
   }
 
@@ -58,7 +57,7 @@ const DisplayMapContainer = (props: IProps) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ReducerType) => ({
   addresses: state.formData.order.addresses,
   pointCoords: state.pointData.point.coordinates,
   crews: state.crewsData.crews,
@@ -73,6 +72,5 @@ export default connect(mapStateToProps,
     setYMapsAC,
     setOrderAddressAC,
     setPointByInput,
-    setPointBySelect
   })(DisplayMapContainer);
 

@@ -1,7 +1,10 @@
 import React from 'react';
 import SuitableCrewListContainer from "./crew-list/SuitableCrewList.container";
 import classes from "./SuitableCrew.module.css";
+import {makeServer} from "../../../api/api";
 
+
+makeServer()
 
 const SuitableCrew = () => {
   return(

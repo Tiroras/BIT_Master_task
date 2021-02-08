@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from "./Map.module.css";
 import {Map, Placemark, YMaps, YMapsApi} from "react-yandex-maps";
-import {ICrew, TSuitableCrew} from "../../../../types/ICrews.type";
+import {TSuitableCrew} from "../../../../types/ProjTypes.types";
 
 
 interface ICoords {
@@ -47,7 +47,7 @@ const DisplayMap = (props: IProps) => {
             <Placemark
               geometry={[props.pointCoords.lat, props.pointCoords.lon]}
               options={{iconColor: "red"}}
-              properties={{balloonContent: "Адресс указан неверно"}}
+              properties={{balloonContent: "Адресс не найден"}}
             />
           }
           {props.suitableCrewFound &&

@@ -1,5 +1,3 @@
-import {Nullable} from "../types/Store.types";
-import {YMapsApi} from "react-yandex-maps";
 
 
 type IState = typeof initialState;
@@ -20,7 +18,7 @@ const initialState = {
     },
     crew_id: 0
   },
-  ymaps: null as Nullable<YMapsApi>,
+  ymaps: {},//null as Nullable<YMapsApi>,
   isValid: true
 }
 

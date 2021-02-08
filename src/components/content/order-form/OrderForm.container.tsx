@@ -2,8 +2,9 @@ import {connect} from "react-redux";
 import OrderForm from "./OrderForm";
 import {setPointByInput} from "../../../redux/point-reducer";
 import {YMapsApi} from "react-yandex-maps";
-import {ICrew} from "../../../types/ICrews.type";
 import {setOrderAddressAC} from "../../../redux/form-reducer";
+import {ReducerType} from "../../../redux/store";
+import {ICrew} from "../../../types/ProjTypes.types";
 
 
 interface IProps {
@@ -31,7 +32,7 @@ const OrderFormContainer = (props: IProps) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ReducerType) => ({
   address: state.formData.order.addresses.address,
   ymaps: state.formData.ymaps,
   crews: state.crewsData.crews,

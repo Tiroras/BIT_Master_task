@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from "./SuitableCrewList.module.css";
-import {ICrew} from "../../../../types/ICrews.type";
 import SuitableCrewItemContainer from "./SuitableCrewItem.container";
+import {ICrew} from "../../../../types/ProjTypes.types";
 
 
 interface IProps {
