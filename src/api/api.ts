@@ -105,30 +105,6 @@ export const API = {
     })
   },
 
-  // postReqForCrew(req: any){
-  //   return fetch("api/orders", {
-  //     method: "POST",
-  //     body: JSON.stringify(req)
-  //   })
-  // }
-}
-
-const fun = () => {
-  fetch("/api/crews")
-    .then(response => {
-      return response.json();
-    })
-    .then(json => console.log(json));
 }
 
 
-
-
-
-// export const crewsAPI = {
-//   getCrews(){
-//     return instance.get("crews").then(res => {
-//       return res.data;
-//     });
-//   }
-// }
