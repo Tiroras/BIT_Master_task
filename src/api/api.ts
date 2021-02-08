@@ -81,7 +81,6 @@ export function makeServer({ environment = "test" } = {}) {
       });
 
       this.post("/orders", (schema, request) => {
-        //const req = JSON.parse(request.requestBody)
         return {order: request.requestBody}
       })
     },
